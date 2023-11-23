@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Dionysus</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="diary">Diary</string>
+    <string name="watchlist_add">Add watchlist entry</string>
+    <string name="diary_add">Add diary entry</string>
 </resources>
