@@ -4,4 +4,7 @@
     <string name="diary">Diary</string>
     <string name="add_watchlist_entry">Add watchlist entry</string>
     <string name="add_diary_entry">Add diary entry</string>
+    <string name="remove_from_watchlist">Remove from watchlist</string>
+    <string name="add_to_watchlist">Add to watchlist</string>
+    <string name="add_to_diary">Add to diary</string>
 </resources>
