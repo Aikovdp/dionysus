@@ -6,19 +6,14 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material.icons.outlined.BookmarkBorder
-import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -34,7 +29,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import me.aikovdp.dionysus.R
+import me.aikovdp.dionysus.ui.screens.diary.DiaryFab
 import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
+import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistFab
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,31 +51,12 @@ fun MainNavigation() {
         floatingActionButton = {
             AnimatedContent(
                 targetState = selectedDestination,
-                transitionSpec = {
-                    scaleIn() togetherWith scaleOut()
-                },
+                transitionSpec = { scaleIn() togetherWith scaleOut() },
                 label = "FAB Enter / Exit"
             ) { dest ->
                 when (dest) {
-                    DionysusScreen.Watchlist.name -> {
-                        LargeFloatingActionButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Outlined.BookmarkAdd,
-                                contentDescription = stringResource(R.string.add_watchlist_entry),
-                                modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize)
-                            )
-                        }
-                    }
-
-                    DionysusScreen.Diary.name -> {
-                        LargeFloatingActionButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Outlined.Create,
-                                contentDescription = stringResource(R.string.add_diary_entry),
-                                modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize)
-                            )
-                        }
-                    }
+                    DionysusScreen.Watchlist.name -> WatchlistFab(onClick = { /*TODO*/ })
+                    DionysusScreen.Diary.name -> DiaryFab(onClick = { /*TODO*/ })
                 }
 
             }
