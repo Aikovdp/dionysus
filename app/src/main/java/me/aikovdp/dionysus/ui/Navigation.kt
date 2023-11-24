@@ -34,8 +34,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import me.aikovdp.dionysus.R
-import me.aikovdp.dionysus.ui.screens.DiaryScreen
-import me.aikovdp.dionysus.ui.screens.WatchlistScreen
+import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
+import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +64,7 @@ fun MainNavigation() {
                         LargeFloatingActionButton(onClick = { /*TODO*/ }) {
                             Icon(
                                 imageVector = Icons.Default.BookmarkAdd,
-                                contentDescription = stringResource(R.string.watchlist_add),
+                                contentDescription = stringResource(R.string.add_watchlist_entry),
                                 modifier = Modifier.size(28.dp)
                             )
                         }
@@ -74,7 +74,7 @@ fun MainNavigation() {
                         LargeFloatingActionButton(onClick = { /*TODO*/ }) {
                             Icon(
                                 imageVector = Icons.Default.Create,
-                                contentDescription = stringResource(R.string.diary_add),
+                                contentDescription = stringResource(R.string.add_diary_entry),
                                 modifier = Modifier.size(28.dp)
                             )
                         }
