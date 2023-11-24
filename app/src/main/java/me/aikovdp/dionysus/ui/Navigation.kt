@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkAdd
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -63,7 +63,7 @@ fun MainNavigation() {
                     DionysusScreen.Watchlist.name -> {
                         LargeFloatingActionButton(onClick = { /*TODO*/ }) {
                             Icon(
-                                imageVector = Icons.Default.BookmarkAdd,
+                                imageVector = Icons.Outlined.BookmarkAdd,
                                 contentDescription = stringResource(R.string.add_watchlist_entry),
                                 modifier = Modifier.size(28.dp)
                             )
@@ -73,7 +73,7 @@ fun MainNavigation() {
                     DionysusScreen.Diary.name -> {
                         LargeFloatingActionButton(onClick = { /*TODO*/ }) {
                             Icon(
-                                imageVector = Icons.Default.Create,
+                                imageVector = Icons.Outlined.Create,
                                 contentDescription = stringResource(R.string.add_diary_entry),
                                 modifier = Modifier.size(28.dp)
                             )
