@@ -1,4 +1,4 @@
-package me.aikovdp.dionysus.ui.screens
+package me.aikovdp.dionysus.ui.screens.watchlist
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
