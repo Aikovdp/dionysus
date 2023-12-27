@@ -5,8 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 
-class FakeWatchlistRepository: WatchlistRepository {
-    private val watchlist = mutableListOf<WatchlistEntry>()
+class FakeWatchlistRepository : WatchlistRepository {
+    private val watchlist = mutableListOf(
+        WatchlistEntry(1, Movie(1, "La La Land"), Instant.now()),
+        WatchlistEntry(2, Movie(2, "Parasite"), Instant.now())
+    )
+
     override fun getEntriesStream(): Flow<List<WatchlistEntry>> = flow {
         while (true) {
             emit(watchlist)
