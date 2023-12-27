@@ -4,8 +4,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
+import javax.inject.Inject
 
-class FakeWatchlistRepository : WatchlistRepository {
+class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
     private val watchlist = mutableListOf(
         WatchlistEntry(1, Movie(1, "La La Land"), Instant.now()),
         WatchlistEntry(2, Movie(2, "Parasite"), Instant.now())
