@@ -8,8 +8,24 @@ import javax.inject.Inject
 
 class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
     private val watchlist = mutableListOf(
-        WatchlistEntry(1, Movie(1, "La La Land"), Instant.now()),
-        WatchlistEntry(2, Movie(2, "Parasite"), Instant.now())
+        WatchlistEntry(
+            1,
+            Movie(
+                1,
+                "La La Land",
+                "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg"
+            ),
+            Instant.now()
+        ),
+        WatchlistEntry(
+            2,
+            Movie(
+                2,
+                "Parasite",
+                "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
+            ),
+            Instant.now()
+        )
     )
 
     override fun getEntriesStream(): Flow<List<WatchlistEntry>> = flow {

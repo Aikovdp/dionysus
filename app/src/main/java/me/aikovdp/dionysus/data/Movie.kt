@@ -2,5 +2,6 @@ package me.aikovdp.dionysus.data
 
 data class Movie(
     val id: Int,
-    val title: String
+    val title: String,
+    val posterUrl: String
 )
