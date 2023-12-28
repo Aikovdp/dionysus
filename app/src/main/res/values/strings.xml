@@ -8,4 +8,6 @@
     <string name="add_to_watchlist">Add to watchlist</string>
     <string name="add_to_diary">Add to diary</string>
     <string name="loading_watchlist_error">Error while loading watchlist</string>
+    <string name="movie_not_found">Movie not found</string>
+    <string name="loading_movie_error">Error while loading movie</string>
 </resources>
