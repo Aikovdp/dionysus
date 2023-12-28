@@ -4,7 +4,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.aikovdp.dionysus.data.FakeMovieRepository
 import me.aikovdp.dionysus.data.FakeWatchlistRepository
+import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
 import javax.inject.Singleton
 
@@ -15,4 +17,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindWatchlistRepository(repository: FakeWatchlistRepository): WatchlistRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindMovieRepository(repository: FakeMovieRepository): MovieRepository
 }
