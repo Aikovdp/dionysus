@@ -7,9 +7,6 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +35,8 @@ fun MainNavigation() {
     val startDestination = DionysusDestinations.WATCHLIST_ROUTE
     val selectedDestination =
         navBackStackEntry?.destination?.route ?: startDestination
-    val screenTitle = TOP_LEVEL_DESTINATIONS.find { it.route == selectedDestination }?.iconTextId ?: R.string.movie
+    val screenTitle = TOP_LEVEL_DESTINATIONS.find { it.route == selectedDestination }?.iconTextId
+        ?: R.string.movie
     val navActions = remember(navController) {
         DionysusNavigationActions(navController)
     }
@@ -59,25 +57,12 @@ fun MainNavigation() {
                 }
 
             }
-
         },
         bottomBar = {
-            NavigationBar {
-                TOP_LEVEL_DESTINATIONS.forEach { item ->
-                    val selected = selectedDestination == item.route
-                    NavigationBarItem(
-                        selected = selected,
-                        onClick = { navActions.navigateTo(item) },
-                        icon = {
-                            Icon(
-                                if (selected) item.selectedIcon else item.unselectedIcon,
-                                stringResource(item.iconTextId)
-                            )
-                        },
-                        label = { Text(stringResource(item.iconTextId)) }
-                    )
-                }
-            }
+            DionysusNavigationBar(
+                selectedDestination = selectedDestination,
+                navigateToTopLevelDestination = navActions::navigateTo
+            )
         }
     ) { paddingValues ->
         NavHost(navController = navController, startDestination = startDestination) {
