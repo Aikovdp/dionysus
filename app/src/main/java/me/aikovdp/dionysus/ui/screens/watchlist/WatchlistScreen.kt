@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
@@ -33,11 +34,12 @@ import java.time.Instant
 
 @Composable
 fun WatchlistScreen(
+    navigateToMovieDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WatchlistViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    WatchlistGrid(items = uiState.items, modifier = modifier)
+    WatchlistGrid(items = uiState.items, navigateToMovieDetails = navigateToMovieDetails, modifier = modifier)
 }
 
 @Composable
@@ -52,7 +54,11 @@ fun WatchlistFab(onClick: () -> Unit) {
 }
 
 @Composable
-fun WatchlistGrid(items: List<WatchlistEntry>, modifier: Modifier = Modifier) {
+fun WatchlistGrid(
+    items: List<WatchlistEntry>,
+    navigateToMovieDetails: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier,
@@ -61,14 +67,21 @@ fun WatchlistGrid(items: List<WatchlistEntry>, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items) {
-            WatchlistGridEntry(it)
+            WatchlistGridEntry(it, navigateToMovieDetails)
         }
     }
 }
 
 @Composable
-fun WatchlistGridEntry(entry: WatchlistEntry) {
-    ElevatedCard {
+@OptIn(ExperimentalMaterial3Api::class)
+fun WatchlistGridEntry(
+    entry: WatchlistEntry,
+    navigateToMovieDetails: (Int) -> Unit,
+) {
+    ElevatedCard(
+        onClick = { navigateToMovieDetails(entry.movie.id) },
+        modifier = Modifier
+    ) {
         AsyncImage(
             model = entry.movie.posterUrl,
             contentDescription = null,
@@ -107,5 +120,5 @@ fun WatchlistGridPreview() {
         )
     )
 
-    WatchlistGrid(list)
+    WatchlistGrid(list, {})
 }

@@ -44,7 +44,7 @@ object DionysusDestinations {
  * Models the navigation actions in the app.
  */
 class DionysusNavigationActions(private val navController: NavHostController) {
-    fun navigateToMovieDetail(movieId: String) {
+    fun navigateToMovieDetail(movieId: Int) {
         navController.navigate("$MOVIE_DETAIL_SCREEN/$movieId")
     }
 

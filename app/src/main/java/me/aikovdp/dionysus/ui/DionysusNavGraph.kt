@@ -22,8 +22,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.ui.screens.diary.DiaryFab
 import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
+import me.aikovdp.dionysus.ui.screens.movie.MovieDetailScreen
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistFab
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
@@ -36,7 +38,7 @@ fun MainNavigation() {
     val startDestination = DionysusDestinations.WATCHLIST_ROUTE
     val selectedDestination =
         navBackStackEntry?.destination?.route ?: startDestination
-    val screenTitle = TOP_LEVEL_DESTINATIONS.single { it.route == selectedDestination }.iconTextId
+    val screenTitle = TOP_LEVEL_DESTINATIONS.find { it.route == selectedDestination }?.iconTextId ?: R.string.movie
     val navActions = remember(navController) {
         DionysusNavigationActions(navController)
     }
@@ -81,10 +83,16 @@ fun MainNavigation() {
         NavHost(navController = navController, startDestination = startDestination) {
 
             composable(DionysusDestinations.WATCHLIST_ROUTE) {
-                WatchlistScreen(Modifier.padding(paddingValues))
+                WatchlistScreen(
+                    navigateToMovieDetails = { navActions.navigateToMovieDetail(it) },
+                    modifier = Modifier.padding(paddingValues),
+                )
             }
             composable(DionysusDestinations.DIARY_ROUTE) {
                 DiaryScreen(Modifier.padding(paddingValues))
+            }
+            composable(DionysusDestinations.MOVIE_DETAIL_ROUTE) {
+                MovieDetailScreen(Modifier.padding(paddingValues))
             }
         }
 

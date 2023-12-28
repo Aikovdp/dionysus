@@ -29,11 +29,11 @@ class MovieDetailViewModel @Inject constructor(
     movieRepository: MovieRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val movieId: Int = savedStateHandle[DionysusDestinationArgs.MOVIE_ID_ARG]!!
+    private val movieId: String = savedStateHandle[DionysusDestinationArgs.MOVIE_ID_ARG]!!
 
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private val _isLoading = MutableStateFlow(false)
-    private val _movieAsync = movieRepository.getMovieStream(movieId)
+    private val _movieAsync = movieRepository.getMovieStream(movieId.toInt())
         .map { handleMovie(it) }
         .catch { emit(Async.Error(R.string.loading_movie_error)) }
 

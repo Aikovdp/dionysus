@@ -11,15 +11,31 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import me.aikovdp.dionysus.R
+
+@Composable
+fun MovieDetailScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MovieDetailViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    Text(
+        text = uiState.movie?.title ?: "Not found",
+        modifier = modifier
+    )
+}
 
 @Composable
 private fun AddToDiaryFab(onClick: () -> Unit) {
@@ -60,7 +76,7 @@ fun MovieFabs(
     Column(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.spacedBy(24.dp)
-    ){
+    ) {
         AddToWatchlistFab(onClick = onWatchlistFabClick, isInWatchlist)
         AddToDiaryFab(onClick = onDiaryFabClick)
     }
