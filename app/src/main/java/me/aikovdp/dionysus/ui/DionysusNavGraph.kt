@@ -1,16 +1,10 @@
 package me.aikovdp.dionysus.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,15 +14,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.ui.screens.diary.DiaryFab
 import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistFab
@@ -40,9 +33,13 @@ import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 fun MainNavigation() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val startDestination = DionysusDestinations.WATCHLIST_ROUTE
     val selectedDestination =
-        navBackStackEntry?.destination?.route ?: DionysusScreen.Watchlist.name
-    val screenTitle = DionysusScreen.valueOf(selectedDestination).title
+        navBackStackEntry?.destination?.route ?: startDestination
+    val screenTitle = TOP_LEVEL_DESTINATIONS.single { it.route == selectedDestination }.iconTextId
+    val navActions = remember(navController) {
+        DionysusNavigationActions(navController)
+    }
 
     Scaffold(
         topBar = {
@@ -55,8 +52,8 @@ fun MainNavigation() {
                 label = "FAB Enter / Exit"
             ) { dest ->
                 when (dest) {
-                    DionysusScreen.Watchlist.name -> WatchlistFab(onClick = { /*TODO*/ })
-                    DionysusScreen.Diary.name -> DiaryFab(onClick = { /*TODO*/ })
+                    DionysusDestinations.WATCHLIST_ROUTE -> WatchlistFab(onClick = { /*TODO*/ })
+                    DionysusDestinations.DIARY_ROUTE -> DiaryFab(onClick = { /*TODO*/ })
                 }
 
             }
@@ -64,41 +61,32 @@ fun MainNavigation() {
         },
         bottomBar = {
             NavigationBar {
-                listOf(DionysusScreen.Watchlist, DionysusScreen.Diary).forEach { item ->
-                    val selected = selectedDestination == item.name
+                TOP_LEVEL_DESTINATIONS.forEach { item ->
+                    val selected = selectedDestination == item.route
                     NavigationBarItem(
                         selected = selected,
-                        onClick = { navController.navigate(item.name) },
+                        onClick = { navActions.navigateTo(item) },
                         icon = {
                             Icon(
-                                if (selected) item.selectedIcon else item.icon,
-                                stringResource(item.title)
+                                if (selected) item.selectedIcon else item.unselectedIcon,
+                                stringResource(item.iconTextId)
                             )
                         },
-                        label = { Text(stringResource(item.title)) }
+                        label = { Text(stringResource(item.iconTextId)) }
                     )
                 }
             }
         }
     ) { paddingValues ->
-        NavHost(navController = navController, startDestination = DionysusScreen.Watchlist.name) {
+        NavHost(navController = navController, startDestination = startDestination) {
 
-            composable(DionysusScreen.Watchlist.name) {
+            composable(DionysusDestinations.WATCHLIST_ROUTE) {
                 WatchlistScreen(Modifier.padding(paddingValues))
             }
-            composable(DionysusScreen.Diary.name) {
+            composable(DionysusDestinations.DIARY_ROUTE) {
                 DiaryScreen(Modifier.padding(paddingValues))
             }
         }
 
     }
-}
-
-enum class DionysusScreen(
-    @StringRes val title: Int,
-    val icon: ImageVector,
-    val selectedIcon: ImageVector = icon
-) {
-    Watchlist(R.string.watchlist, Icons.Outlined.BookmarkBorder, Icons.Default.Bookmark),
-    Diary(R.string.diary, Icons.Outlined.Book, Icons.Default.Book)
 }

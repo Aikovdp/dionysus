@@ -1,7 +1,15 @@
 package me.aikovdp.dionysus.ui
 
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.ui.DionysusDestinationArgs.MOVIE_ID_ARG
 import me.aikovdp.dionysus.ui.DionysusScreens.DIARY_SCREEN
 import me.aikovdp.dionysus.ui.DionysusScreens.MOVIE_DETAIL_SCREEN
@@ -36,39 +44,45 @@ object DionysusDestinations {
  * Models the navigation actions in the app.
  */
 class DionysusNavigationActions(private val navController: NavHostController) {
-    fun navigateToWatchlist() {
-        navController.navigate(DionysusDestinations.WATCHLIST_ROUTE) {
-            // Pop up to the start destination of the graph to
-            // avoid building up a large stack of destinations
-            // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
-            launchSingleTop = true
-            // Restore state when reselecting a previously selected item
-            restoreState = true
-        }
-    }
-
-    fun navigateToDiary() {
-        navController.navigate(DionysusDestinations.DIARY_ROUTE) {
-            // Pop up to the start destination of the graph to
-            // avoid building up a large stack of destinations
-            // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
-            launchSingleTop = true
-            // Restore state when reselecting a previously selected item
-            restoreState = true
-        }
-    }
-
     fun navigateToMovieDetail(movieId: String) {
         navController.navigate("$MOVIE_DETAIL_SCREEN/$movieId")
     }
+
+    fun navigateTo(destination: DionysusTopLevelDestination) {
+        navController.navigate(destination.route) {
+            // Pop up to the start destination of the graph to
+            // avoid building up a large stack of destinations
+            // on the back stack as users select items
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
+    }
 }
+
+data class DionysusTopLevelDestination (
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    @StringRes val iconTextId: Int
+)
+
+val TOP_LEVEL_DESTINATIONS = listOf(
+    DionysusTopLevelDestination(
+        route = DionysusDestinations.WATCHLIST_ROUTE,
+        selectedIcon = Icons.Default.Bookmark,
+        unselectedIcon = Icons.Outlined.BookmarkBorder,
+        iconTextId = R.string.watchlist
+    ),
+    DionysusTopLevelDestination(
+        route = DionysusDestinations.DIARY_ROUTE,
+        selectedIcon = Icons.Default.Book,
+        unselectedIcon = Icons.Outlined.Book,
+        iconTextId = R.string.diary
+    ),
+)
