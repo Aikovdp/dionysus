@@ -2,12 +2,16 @@ package me.aikovdp.dionysus.ui.screens.movie
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Create
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.aikovdp.dionysus.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieDetailScreen(
     modifier: Modifier = Modifier,
@@ -31,10 +36,16 @@ fun MovieDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Text(
-        text = uiState.movie?.title ?: "Not found",
+    Scaffold(
+        topBar = { CenterAlignedTopAppBar(title = { uiState.movie?.title?.let { Text(it) } }) },
         modifier = modifier
-    )
+    ) { paddingValues ->
+        Text(
+            text = uiState.movie?.title ?: "Not found",
+            modifier = Modifier.padding(paddingValues)
+        )
+    }
+
 }
 
 @Composable
