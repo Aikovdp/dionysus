@@ -2,7 +2,6 @@ package me.aikovdp.dionysus.ui.screens.watchlist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -98,8 +97,7 @@ fun WatchlistGridEntry(
         AsyncImage(
             model = entry.movie.posterUrl,
             contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth()
+            contentScale = ContentScale.Crop
         )
         Text(
             text = entry.movie.title,
