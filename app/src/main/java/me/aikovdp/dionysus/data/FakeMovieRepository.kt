@@ -30,6 +30,6 @@ class FakeMovieRepository @Inject constructor() : MovieRepository {
         if (query.isBlank()) {
             listOf()
         } else {
-            movies.filter { it.title.contains(query, ignoreCase = false) }
+            movies.filter { it.title.contains(query, ignoreCase = true) }
         }
 }
