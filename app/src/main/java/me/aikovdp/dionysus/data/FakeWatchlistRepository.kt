@@ -35,13 +35,13 @@ class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
         }
     }
 
-    override fun createEntry(movie: Movie): Int {
+    override suspend fun createEntry(movie: Movie): Int {
         val id = watchlist.maxOf { it.id } + 1
         watchlist.add(WatchlistEntry(id, movie, Instant.now()))
         return id
     }
 
-    override fun deleteEntry(entryId: Int) {
+    override suspend fun deleteEntry(entryId: Int) {
         watchlist.removeIf { it.id == entryId }
     }
 

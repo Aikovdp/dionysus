@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface WatchlistRepository {
     fun getEntriesStream(): Flow<List<WatchlistEntry>>
-    fun createEntry(movie: Movie): Int
-    fun deleteEntry(entryId: Int)
+    suspend fun createEntry(movie: Movie): Int
+    suspend fun deleteEntry(entryId: Int)
 }
