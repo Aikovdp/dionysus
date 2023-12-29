@@ -9,6 +9,7 @@ import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import me.aikovdp.dionysus.MainActivity
 import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.ui.DionysusDestinationArgs.MOVIE_ID_ARG
 import me.aikovdp.dionysus.ui.DionysusScreens.DIARY_SCREEN

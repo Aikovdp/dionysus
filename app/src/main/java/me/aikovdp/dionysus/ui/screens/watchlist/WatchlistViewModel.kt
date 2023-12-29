@@ -24,7 +24,7 @@ data class WatchlistUiState(
 
 @HiltViewModel
 class WatchlistViewModel @Inject constructor(
-    private val watchlistRepository: WatchlistRepository
+    watchlistRepository: WatchlistRepository
 ) : ViewModel() {
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private val _isLoading = MutableStateFlow(false)
