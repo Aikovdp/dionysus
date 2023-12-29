@@ -3,37 +3,27 @@ package me.aikovdp.dionysus.ui.screens.watchlist
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.BookmarkAdd
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.data.Movie
 import me.aikovdp.dionysus.data.WatchlistEntry
+import me.aikovdp.dionysus.ui.screens.search.SearchBarScaffold
 import me.aikovdp.dionysus.ui.theme.Typography
 import java.time.Instant
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WatchlistScreen(
     navigateToMovieDetails: (Int) -> Unit,
@@ -41,26 +31,14 @@ fun WatchlistScreen(
     viewModel: WatchlistViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text(stringResource(R.string.watchlist)) }) },
+    SearchBarScaffold(
+        navigateToMovieDetails = navigateToMovieDetails,
         modifier = modifier
     ) { paddingValues ->
         WatchlistGrid(
             items = uiState.items,
             navigateToMovieDetails = navigateToMovieDetails,
-            modifier = modifier.padding(paddingValues)
-        )
-    }
-
-}
-
-@Composable
-fun WatchlistFab(onClick: () -> Unit) {
-    LargeFloatingActionButton(onClick = onClick) {
-        Icon(
-            imageVector = Icons.Outlined.BookmarkAdd,
-            contentDescription = stringResource(R.string.add_watchlist_entry),
-            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize)
+            modifier = Modifier.padding(paddingValues)
         )
     }
 }

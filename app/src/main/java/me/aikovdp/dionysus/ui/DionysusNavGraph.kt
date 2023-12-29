@@ -1,9 +1,5 @@
 package me.aikovdp.dionysus.ui
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,11 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import me.aikovdp.dionysus.ui.screens.diary.DiaryFab
 import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
 import me.aikovdp.dionysus.ui.screens.movie.MovieDetailScreen
-import me.aikovdp.dionysus.ui.screens.search.SearchScreen
-import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistFab
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
 @Composable
@@ -35,19 +28,6 @@ fun MainNavigation() {
     }
 
     Scaffold(
-        floatingActionButton = {
-            AnimatedContent(
-                targetState = selectedDestination,
-                transitionSpec = { scaleIn() togetherWith scaleOut() },
-                label = "FAB Enter / Exit"
-            ) { dest ->
-                when (dest) {
-                    DionysusDestinations.WATCHLIST_ROUTE -> WatchlistFab(onClick = navActions::navigateToSearch)
-                    DionysusDestinations.DIARY_ROUTE -> DiaryFab(onClick = navActions::navigateToSearch)
-                }
-
-            }
-        },
         bottomBar = {
             DionysusNavigationBar(
                 selectedDestination = selectedDestination,
@@ -63,13 +43,13 @@ fun MainNavigation() {
                 )
             }
             composable(DionysusDestinations.DIARY_ROUTE) {
-                DiaryScreen(Modifier.padding(paddingValues))
+                DiaryScreen(
+                    navigateToMovieDetails = { navActions.navigateToMovieDetail(it) },
+                    modifier = Modifier.padding(paddingValues),
+                )
             }
             composable(DionysusDestinations.MOVIE_DETAIL_ROUTE) {
                 MovieDetailScreen(Modifier.padding(paddingValues))
-            }
-            composable(DionysusDestinations.SEARCH_ROUTE) {
-                SearchScreen(navigateToMovieDetails = navActions::navigateToMovieDetail)
             }
         }
     }
