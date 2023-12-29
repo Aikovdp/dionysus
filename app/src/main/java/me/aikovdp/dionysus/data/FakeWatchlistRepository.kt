@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import javax.inject.Inject
 
-class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
+class FakeWatchlistRepository @Inject constructor(
+    private val movieRepository: MovieRepository
+) : WatchlistRepository {
     private val watchlist = mutableListOf(
         WatchlistEntry(
             1,
@@ -41,8 +43,19 @@ class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
         return id
     }
 
-    override suspend fun deleteEntry(entryId: Int) {
-        watchlist.removeIf { it.id == entryId }
+    override suspend fun createEntry(movieId: Int): Int {
+        return createEntry(movieRepository.getMovie(movieId))
+    }
+
+    override suspend fun removeEntry(movieId: Int) {
+        watchlist.removeIf { it.movie.id == movieId }
+    }
+
+    override fun containsMovieStream(movieId: Int): Flow<Boolean> = flow {
+        while (true) {
+            emit(watchlist.any { it.movie.id == movieId })
+            delay(1_000)
+        }
     }
 
 }
