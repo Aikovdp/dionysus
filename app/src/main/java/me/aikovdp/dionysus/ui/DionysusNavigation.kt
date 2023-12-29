@@ -11,8 +11,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.ui.DionysusDestinationArgs.MOVIE_ID_ARG
+import me.aikovdp.dionysus.ui.DionysusDestinations.SEARCH_ROUTE
 import me.aikovdp.dionysus.ui.DionysusScreens.DIARY_SCREEN
 import me.aikovdp.dionysus.ui.DionysusScreens.MOVIE_DETAIL_SCREEN
+import me.aikovdp.dionysus.ui.DionysusScreens.SEARCH_SCREEN
 import me.aikovdp.dionysus.ui.DionysusScreens.WATCHLIST_SCREEN
 
 /**
@@ -22,6 +24,7 @@ private object DionysusScreens {
     const val WATCHLIST_SCREEN = "watchlist"
     const val DIARY_SCREEN = "diary"
     const val MOVIE_DETAIL_SCREEN = "movie"
+    const val SEARCH_SCREEN = "search"
 }
 
 /**
@@ -38,6 +41,7 @@ object DionysusDestinations {
     const val WATCHLIST_ROUTE = WATCHLIST_SCREEN
     const val DIARY_ROUTE = DIARY_SCREEN
     const val MOVIE_DETAIL_ROUTE = "$MOVIE_DETAIL_SCREEN/{$MOVIE_ID_ARG}"
+    const val SEARCH_ROUTE = SEARCH_SCREEN
 }
 
 /**
@@ -46,6 +50,10 @@ object DionysusDestinations {
 class DionysusNavigationActions(private val navController: NavHostController) {
     fun navigateToMovieDetail(movieId: Int) {
         navController.navigate("$MOVIE_DETAIL_SCREEN/$movieId")
+    }
+
+    fun navigateToSearch() {
+        navController.navigate(SEARCH_ROUTE)
     }
 
     fun navigateTo(destination: DionysusTopLevelDestination) {

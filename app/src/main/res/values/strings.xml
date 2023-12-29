@@ -11,4 +11,5 @@
     <string name="movie_not_found">Movie not found</string>
     <string name="loading_movie_error">Error while loading movie</string>
     <string name="movie">Movie</string>
+    <string name="loading_search_results_error">Error loading search results</string>
 </resources>

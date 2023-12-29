@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import me.aikovdp.dionysus.ui.screens.diary.DiaryFab
 import me.aikovdp.dionysus.ui.screens.diary.DiaryScreen
 import me.aikovdp.dionysus.ui.screens.movie.MovieDetailScreen
+import me.aikovdp.dionysus.ui.screens.search.SearchScreen
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistFab
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
@@ -41,8 +42,8 @@ fun MainNavigation() {
                 label = "FAB Enter / Exit"
             ) { dest ->
                 when (dest) {
-                    DionysusDestinations.WATCHLIST_ROUTE -> WatchlistFab(onClick = { /*TODO*/ })
-                    DionysusDestinations.DIARY_ROUTE -> DiaryFab(onClick = { /*TODO*/ })
+                    DionysusDestinations.WATCHLIST_ROUTE -> WatchlistFab(onClick = navActions::navigateToSearch)
+                    DionysusDestinations.DIARY_ROUTE -> DiaryFab(onClick = navActions::navigateToSearch)
                 }
 
             }
@@ -66,6 +67,9 @@ fun MainNavigation() {
             }
             composable(DionysusDestinations.MOVIE_DETAIL_ROUTE) {
                 MovieDetailScreen(Modifier.padding(paddingValues))
+            }
+            composable(DionysusDestinations.SEARCH_ROUTE) {
+                SearchScreen(navigateToMovieDetails = navActions::navigateToMovieDetail)
             }
         }
     }
