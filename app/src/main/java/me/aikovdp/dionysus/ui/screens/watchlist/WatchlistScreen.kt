@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import me.aikovdp.dionysus.data.Movie
 import me.aikovdp.dionysus.data.WatchlistEntry
-import me.aikovdp.dionysus.ui.screens.search.SearchBarScaffold
+import me.aikovdp.dionysus.ui.search.SearchBarScaffold
 import me.aikovdp.dionysus.ui.theme.Typography
 import java.time.Instant
 

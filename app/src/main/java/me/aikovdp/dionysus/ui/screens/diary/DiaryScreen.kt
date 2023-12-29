@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.aikovdp.dionysus.ui.screens.search.SearchBarScaffold
+import me.aikovdp.dionysus.ui.search.SearchBarScaffold
 
 @Composable
 fun DiaryScreen(

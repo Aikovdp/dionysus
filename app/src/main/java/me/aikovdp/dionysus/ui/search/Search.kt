@@ -1,4 +1,4 @@
-package me.aikovdp.dionysus.ui.screens.search
+package me.aikovdp.dionysus.ui.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
