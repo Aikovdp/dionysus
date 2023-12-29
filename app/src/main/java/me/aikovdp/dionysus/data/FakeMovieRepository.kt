@@ -25,4 +25,11 @@ class FakeMovieRepository @Inject constructor() : MovieRepository {
             delay(5_000)
         }
     }
+
+    override fun searchMovies(query: String): List<Movie> =
+        if (query.isBlank()) {
+            listOf()
+        } else {
+            movies.filter { it.title.contains(query, ignoreCase = false) }
+        }
 }
