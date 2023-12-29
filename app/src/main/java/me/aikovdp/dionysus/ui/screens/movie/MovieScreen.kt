@@ -39,6 +39,11 @@ fun MovieDetailScreen(
 
     Scaffold(
         topBar = { CenterAlignedTopAppBar(title = { uiState.movie?.title?.let { Text(it) } }) },
+        floatingActionButton = { MovieFabs(
+            onDiaryFabClick = { /*TODO*/ },
+            onWatchlistFabClick = { viewModel.toggleInWatchlist() },
+            isInWatchlist = uiState.isInWatchlist
+        )},
         modifier = modifier
     ) { paddingValues ->
         Column {
@@ -72,12 +77,12 @@ private fun AddToWatchlistFab(onClick: () -> Unit, isInWatchlist: Boolean) {
     SmallFloatingActionButton(onClick = onClick) {
         if (isInWatchlist)
             Icon(
-                imageVector = Icons.Outlined.BookmarkBorder,
+                imageVector = Icons.Filled.Bookmark,
                 contentDescription = stringResource(R.string.remove_from_watchlist)
             )
         else
             Icon(
-                imageVector = Icons.Filled.Bookmark,
+                imageVector = Icons.Outlined.BookmarkBorder,
                 contentDescription = stringResource(R.string.add_to_watchlist)
             )
     }
