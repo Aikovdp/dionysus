@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import me.aikovdp.dionysus.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,10 +41,14 @@ fun MovieDetailScreen(
         topBar = { CenterAlignedTopAppBar(title = { uiState.movie?.title?.let { Text(it) } }) },
         modifier = modifier
     ) { paddingValues ->
-        Text(
-            text = uiState.movie?.title ?: "Not found",
-            modifier = Modifier.padding(paddingValues)
-        )
+        Column {
+            Text(
+                text = uiState.movie?.title ?: if (uiState.isLoading) "Loading" else stringResource(uiState.userMessage ?: R.string.movie_not_found),
+                modifier = Modifier.padding(paddingValues)
+            )
+            AsyncImage(model = uiState.movie?.posterUrl, contentDescription = uiState.movie?.title)
+        }
+
     }
 
 }

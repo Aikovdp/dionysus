@@ -11,7 +11,7 @@ class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
         WatchlistEntry(
             1,
             Movie(
-                1,
+                313369,
                 "La La Land",
                 "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg"
             ),
@@ -20,7 +20,7 @@ class FakeWatchlistRepository @Inject constructor() : WatchlistRepository {
         WatchlistEntry(
             2,
             Movie(
-                2,
+                496243,
                 "Parasite",
                 "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
             ),
