@@ -20,5 +20,8 @@ data class NetworkMovieDetails(
     @SerialName("release_date")
     val releaseDate: String,
     @SerialName("backdrop_path")
-    val backdropPath: String?
+    val backdropPath: String?,
+    val runtime: Int,
+    val tagline: String,
+    val overview: String
 )
