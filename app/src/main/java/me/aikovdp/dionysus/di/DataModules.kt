@@ -1,16 +1,22 @@
 package me.aikovdp.dionysus.di
 
+import android.content.Context
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import me.aikovdp.dionysus.data.DionysusMovieRepository
 import me.aikovdp.dionysus.data.FakeWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
+import me.aikovdp.dionysus.data.source.local.DionysusDatabase
+import me.aikovdp.dionysus.data.source.local.MovieDao
+import me.aikovdp.dionysus.data.source.local.WatchlistDao
 import me.aikovdp.dionysus.data.source.network.MoviesNetworkDataSource
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
@@ -46,4 +52,25 @@ object DataSourceModule {
     @Provides
     fun provideMoviesNetworkDataSource(): MoviesNetworkDataSource =
         retrofit.create(MoviesNetworkDataSource::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): DionysusDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            DionysusDatabase::class.java,
+            "Dionysus.db"
+        ).build()
+    }
+
+    @Provides
+    fun provideMovieDao(database: DionysusDatabase): MovieDao = database.movieDao()
+
+    @Provides
+    fun provideWatchlistDao(database: DionysusDatabase): WatchlistDao = database.watchlistDao()
 }
