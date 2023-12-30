@@ -17,5 +17,5 @@ class DionysusMovieRepository @Inject constructor(
     }
 
     override suspend fun searchMovies(query: String): List<Movie> =
-        moviesNetworkDataSource.search(query).results.map { it.toExternal() }
+        moviesNetworkDataSource.searchMovies(query).results.map { it.toExternal() }
 }

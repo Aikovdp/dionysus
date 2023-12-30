@@ -14,5 +14,5 @@ interface MoviesNetworkDataSource {
 
     @Headers("Authorization: Bearer ${BuildConfig.TMDB_API_READ_ACCESS_TOKEN}")
     @GET("3/search/movie")
-    suspend fun search(@Query("query") query: String): NetworkSearchResults
+    suspend fun searchMovies(@Query("query") query: String): NetworkSearchResults
 }
