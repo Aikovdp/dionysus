@@ -1,15 +1,19 @@
 package me.aikovdp.dionysus.ui
 
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigation.suite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
 import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScope
 import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteType
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,5 +69,26 @@ fun MainNavigation() {
                 )
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3AdaptiveNavigationSuiteApi::class)
+private fun navigationSuiteItems(
+    selectedDestination: String,
+    navigateToTopLevelDestination: (DionysusTopLevelDestination) -> Unit
+): NavigationSuiteScope.() -> Unit = {
+    TOP_LEVEL_DESTINATIONS.forEach { item ->
+        val selected = selectedDestination == item.route
+        item(
+            selected = selected,
+            onClick = { navigateToTopLevelDestination(item) },
+            icon = {
+                Icon(
+                    if (selected) item.selectedIcon else item.unselectedIcon,
+                    stringResource(item.iconTextId)
+                )
+            },
+            label = { Text(stringResource(item.iconTextId)) }
+        )
     }
 }
