@@ -36,19 +36,21 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
+    val movie = uiState.movie ?: return
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { uiState.movie?.title?.let { Text(it) } }) },
-        floatingActionButton = { MovieFabs(
-            onDiaryFabClick = { /*TODO*/ },
-            onWatchlistFabClick = { viewModel.toggleInWatchlist() },
-            isInWatchlist = uiState.isInWatchlist
-        )},
+        topBar = { CenterAlignedTopAppBar(title = { Text(movie.title) }) },
+        floatingActionButton = {
+            MovieFabs(
+                onDiaryFabClick = { /*TODO*/ },
+                onWatchlistFabClick = { viewModel.toggleInWatchlist() },
+                isInWatchlist = uiState.isInWatchlist
+            )
+        },
         modifier = modifier
     ) { paddingValues ->
         Column {
             Text(
-                text = uiState.movie?.title ?: if (uiState.isLoading) "Loading" else stringResource(uiState.userMessage ?: R.string.movie_not_found),
+                text = movie.title,
                 modifier = Modifier.padding(paddingValues)
             )
             AsyncImage(model = uiState.movie?.posterUrl, contentDescription = uiState.movie?.title)
