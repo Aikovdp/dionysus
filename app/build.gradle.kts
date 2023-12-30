@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    kotlin("plugin.serialization") version "1.8.10"
+    kotlin("plugin.serialization") version "1.9.21"
 
     // Hilt
     kotlin("kapt")
@@ -48,7 +48,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
     packaging {
         resources {
