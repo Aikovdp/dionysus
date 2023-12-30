@@ -6,7 +6,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface NetworkDataSource {
+interface MoviesNetworkDataSource {
 
     @Headers("Authorization: Bearer ${BuildConfig.TMDB_API_READ_ACCESS_TOKEN}")
     @GET("3/movie/{id}")

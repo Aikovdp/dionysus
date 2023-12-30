@@ -11,7 +11,7 @@ import me.aikovdp.dionysus.data.DionysusMovieRepository
 import me.aikovdp.dionysus.data.FakeWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
-import me.aikovdp.dionysus.data.source.network.NetworkDataSource
+import me.aikovdp.dionysus.data.source.network.MoviesNetworkDataSource
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -44,6 +44,6 @@ object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideNetworkDataSource(): NetworkDataSource =
-        retrofit.create(NetworkDataSource::class.java)
+    fun provideMoviesNetworkDataSource(): MoviesNetworkDataSource =
+        retrofit.create(MoviesNetworkDataSource::class.java)
 }

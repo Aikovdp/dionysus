@@ -2,14 +2,14 @@ package me.aikovdp.dionysus.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import me.aikovdp.dionysus.data.source.network.NetworkDataSource
+import me.aikovdp.dionysus.data.source.network.MoviesNetworkDataSource
 import javax.inject.Inject
 
 class DionysusMovieRepository @Inject constructor(
-    private val networkDataSource: NetworkDataSource
+    private val moviesNetworkDataSource: MoviesNetworkDataSource
 ) : MovieRepository {
     override suspend fun getMovie(movieId: Int): Movie {
-        return networkDataSource.getMovie(movieId).toExternal()
+        return moviesNetworkDataSource.getMovie(movieId).toExternal()
     }
 
     override fun getMovieStream(movieId: Int): Flow<Movie> = flow {
@@ -17,5 +17,5 @@ class DionysusMovieRepository @Inject constructor(
     }
 
     override suspend fun searchMovies(query: String): List<Movie> =
-        networkDataSource.search(query).results.map { it.toExternal() }
+        moviesNetworkDataSource.search(query).results.map { it.toExternal() }
 }
