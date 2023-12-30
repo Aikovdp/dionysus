@@ -2,43 +2,59 @@ package me.aikovdp.dionysus.ui.screens.movie
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.outlined.BookmarkBorder
-import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import me.aikovdp.dionysus.R
+import me.aikovdp.dionysus.data.MovieDetails
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieDetailScreen(
+    navigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val movie = uiState.movie ?: return
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text(movie.title) }) },
+        topBar = {
+            LargeTopAppBar(
+                title = { Text(movie.title) },
+                scrollBehavior = scrollBehavior,
+                navigationIcon = {
+                    IconButton(onClick = navigateUp) {
+                        Icon(Icons.Default.ArrowBack, "Back")
+                    }
+                },
+            )
+        },
         floatingActionButton = {
             MovieFabs(
                 onDiaryFabClick = { /*TODO*/ },
@@ -46,72 +62,92 @@ fun MovieDetailScreen(
                 isInWatchlist = uiState.isInWatchlist
             )
         },
-        modifier = modifier
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { paddingValues ->
-        Column {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp + 56.dp + 24.dp + 40.dp + 16.dp
+            ),
+            modifier = Modifier
+                .padding(paddingValues)
+        ) {
+            item {
+                Card {
+                    AsyncImage(
+                        model = movie.backdropUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
+            }
+            item {
+                MainInformation(movie)
+            }
+
+            item {
+                MovieDescription(movie)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MovieDescription(movie: MovieDetails) {
+    SurfaceContainer {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = movie.tagline,
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Text(
+                text = movie.overview,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+@Composable
+private fun MainInformation(movie: MovieDetails) {
+    SurfaceContainer {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
             Text(
                 text = movie.title,
-                modifier = Modifier.padding(paddingValues)
+                style = MaterialTheme.typography.headlineLarge
             )
-            AsyncImage(model = uiState.movie?.posterUrl, contentDescription = uiState.movie?.title)
+            val formattedReleaseDate = movie.releaseDate
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
+            Text(
+                text = "$formattedReleaseDate  •  ${movie.runtime}",
+                style = MaterialTheme.typography.labelLarge
+            )
         }
-
-    }
-
-}
-
-@Composable
-private fun AddToDiaryFab(onClick: () -> Unit) {
-    ExtendedFloatingActionButton(
-        onClick = onClick,
-        icon = {
-            Icon(
-                imageVector = Icons.Outlined.Create,
-                contentDescription = stringResource(R.string.add_to_diary)
-            )
-        },
-        text = { Text(stringResource(R.string.add_to_diary)) }
-    )
-}
-
-@Composable
-private fun AddToWatchlistFab(onClick: () -> Unit, isInWatchlist: Boolean) {
-    SmallFloatingActionButton(onClick = onClick) {
-        if (isInWatchlist)
-            Icon(
-                imageVector = Icons.Filled.Bookmark,
-                contentDescription = stringResource(R.string.remove_from_watchlist)
-            )
-        else
-            Icon(
-                imageVector = Icons.Outlined.BookmarkBorder,
-                contentDescription = stringResource(R.string.add_to_watchlist)
-            )
     }
 }
 
 @Composable
-fun MovieFabs(
-    onDiaryFabClick: () -> Unit,
-    onWatchlistFabClick: () -> Unit,
-    isInWatchlist: Boolean
+fun SurfaceContainer(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
 ) {
-    Column(
-        horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 3.dp,
+        modifier = modifier
+            .height(IntrinsicSize.Min)
+            .fillMaxWidth()
     ) {
-        AddToWatchlistFab(onClick = onWatchlistFabClick, isInWatchlist)
-        AddToDiaryFab(onClick = onDiaryFabClick)
+        content()
     }
-}
-
-@Preview
-@Composable
-fun MovieFabsPreview() {
-    var isInWatchlist by remember { mutableStateOf(false) }
-    MovieFabs(
-        onDiaryFabClick = { },
-        onWatchlistFabClick = { isInWatchlist = !isInWatchlist },
-        isInWatchlist = isInWatchlist
-    )
 }

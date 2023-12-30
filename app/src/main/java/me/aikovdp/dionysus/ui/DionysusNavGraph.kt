@@ -49,7 +49,10 @@ fun MainNavigation() {
                 )
             }
             composable(DionysusDestinations.MOVIE_DETAIL_ROUTE) {
-                MovieDetailScreen(Modifier.padding(paddingValues))
+                MovieDetailScreen(
+                    navigateUp = navController::navigateUp,
+                    modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     }
