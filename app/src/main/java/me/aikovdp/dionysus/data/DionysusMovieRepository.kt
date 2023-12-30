@@ -8,11 +8,11 @@ import javax.inject.Inject
 class DionysusMovieRepository @Inject constructor(
     private val moviesNetworkDataSource: MoviesNetworkDataSource
 ) : MovieRepository {
-    override suspend fun getMovie(movieId: Int): Movie {
+    override suspend fun getMovie(movieId: Int): MovieDetails {
         return moviesNetworkDataSource.getMovie(movieId).toExternal()
     }
 
-    override fun getMovieStream(movieId: Int): Flow<Movie> = flow {
+    override fun getMovieStream(movieId: Int): Flow<MovieDetails> = flow {
         emit(getMovie(movieId))
     }
 

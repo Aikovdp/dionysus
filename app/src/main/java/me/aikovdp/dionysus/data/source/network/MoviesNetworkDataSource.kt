@@ -10,7 +10,7 @@ interface MoviesNetworkDataSource {
 
     @Headers("Authorization: Bearer ${BuildConfig.TMDB_API_READ_ACCESS_TOKEN}")
     @GET("3/movie/{id}")
-    suspend fun getMovie(@Path("id") id: Int): NetworkMovie
+    suspend fun getMovie(@Path("id") id: Int): NetworkMovieDetails
 
     @Headers("Authorization: Bearer ${BuildConfig.TMDB_API_READ_ACCESS_TOKEN}")
     @GET("3/search/movie")

@@ -15,3 +15,9 @@ data class MovieDetails(
     val releaseDate: LocalDate,
     val backdropUrl: String?
 )
+
+fun MovieDetails.toMovie() = Movie(
+    id = id,
+    title = title,
+    posterUrl = posterUrl
+)

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.aikovdp.dionysus.R
-import me.aikovdp.dionysus.data.Movie
+import me.aikovdp.dionysus.data.MovieDetails
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
 import me.aikovdp.dionysus.ui.DionysusDestinationArgs
@@ -22,7 +22,7 @@ import me.aikovdp.dionysus.util.WhileUiSubscribed
 import javax.inject.Inject
 
 data class MovieDetailUiState(
-    val movie: Movie? = null,
+    val movie: MovieDetails? = null,
     val isInWatchlist: Boolean = false,
     val isLoading: Boolean = false,
     val userMessage: Int? = null
@@ -82,7 +82,7 @@ class MovieDetailViewModel @Inject constructor(
             initialValue = MovieDetailUiState(isLoading = true)
         )
 
-    private fun handleMovie(movie: Movie?): Async<Movie?> {
+    private fun handleMovie(movie: MovieDetails?): Async<MovieDetails?> {
         if (movie == null) {
             return Async.Error(R.string.movie_not_found)
         }
