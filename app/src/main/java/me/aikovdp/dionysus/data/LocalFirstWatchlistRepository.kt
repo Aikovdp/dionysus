@@ -26,9 +26,8 @@ class LocalFirstWatchlistRepository @Inject constructor(
         }
 
     override suspend fun createEntry(movieId: Int): Int {
-        watchlistDao.insert(LocalWatchlistEntry(movieId, Instant.now()))
         val movie = movieDataSource.getMovie(movieId).toExternal().toMovie().toLocal()
-        movieDao.upsert(movie)
+        watchlistDao.insert(LocalWatchlistEntry(movieId, Instant.now()), movie)
         return movieId
     }
 
