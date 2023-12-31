@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flow
 import me.aikovdp.dionysus.data.source.network.MoviesNetworkDataSource
 import javax.inject.Inject
 
-class DionysusMovieRepository @Inject constructor(
+class DefaultMovieRepository @Inject constructor(
     private val moviesNetworkDataSource: MoviesNetworkDataSource
 ) : MovieRepository {
     override suspend fun getMovie(movieId: Int): MovieDetails {

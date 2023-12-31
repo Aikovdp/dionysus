@@ -10,7 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import me.aikovdp.dionysus.data.DionysusMovieRepository
+import me.aikovdp.dionysus.data.DefaultMovieRepository
 import me.aikovdp.dionysus.data.LocalFirstWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
@@ -32,7 +32,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindMovieRepository(repository: DionysusMovieRepository): MovieRepository
+    abstract fun bindMovieRepository(repository: DefaultMovieRepository): MovieRepository
 }
 
 @Module
