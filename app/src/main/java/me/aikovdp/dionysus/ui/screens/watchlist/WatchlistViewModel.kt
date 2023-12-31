@@ -1,5 +1,6 @@
 package me.aikovdp.dionysus.ui.screens.watchlist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +30,12 @@ class WatchlistViewModel @Inject constructor(
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private val _isLoading = MutableStateFlow(false)
     private val _watchlistEntriesAsync =
-        watchlistRepository.getEntriesStream().map { Async.Success(it) }
-            .catch<Async<List<WatchlistEntry>>> { emit(Async.Error(R.string.loading_watchlist_error)) }
+        watchlistRepository.getEntriesStream()
+            .map { Async.Success(it) }
+            .catch<Async<List<WatchlistEntry>>> {
+                emit(Async.Error(R.string.loading_watchlist_error))
+                Log.e("WatchlistViewModel", "Issue getting watchlist state", it)
+            }
 
     val uiState: StateFlow<WatchlistUiState> = combine(
         _isLoading,

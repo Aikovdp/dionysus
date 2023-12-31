@@ -43,7 +43,7 @@ class MovieDetailViewModel @Inject constructor(
         .map { handleMovie(it) }
         .catch {
             emit(Async.Error(R.string.loading_movie_error))
-            Log.e("MovieDetailViewModel", "Issue movie details", it)
+            Log.e("MovieDetailViewModel", "Issue getting movie details", it)
         }
     private val _isInWatchlistAsync = watchlistRepository.containsMovieStream(movieId)
         .map { handleBoolean(it) }
