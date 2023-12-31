@@ -1,6 +1,7 @@
 package me.aikovdp.dionysus.data.source.local
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -28,10 +29,27 @@ interface WatchlistDao {
     fun observeById(movieId: Int): Flow<LocalWatchlistEntry>
 
     /**
-     * Delete a watchlist entry by movie id
+     * Inserts a watchlist entry in the database.
+     *
+     * @param entry the entry to be inserted.
+     */
+    @Insert
+    suspend fun insert(entry: LocalWatchlistEntry)
+
+    /**
+     * Deletes a watchlist entry by movie id
      *
      * @param movieId the movie id.
      */
     @Query("DELETE FROM watchlist WHERE movieId = :movieId")
     suspend fun deleteById(movieId: Int)
+
+    /**
+     * Observes whether a movie is in the watchlist.
+     *
+     * @param movieId the movie id.
+     * @return whether the movie is in the watchlist.
+     */
+    @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE movieId = :movieId)")
+    fun observeIsInWatchlist(movieId: Int): Flow<Boolean>
 }
