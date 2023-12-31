@@ -11,7 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import me.aikovdp.dionysus.data.DionysusMovieRepository
-import me.aikovdp.dionysus.data.FakeWatchlistRepository
+import me.aikovdp.dionysus.data.LocalFirstWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
 import me.aikovdp.dionysus.data.source.local.DionysusDatabase
@@ -28,7 +28,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindWatchlistRepository(repository: FakeWatchlistRepository): WatchlistRepository
+    abstract fun bindWatchlistRepository(repository: LocalFirstWatchlistRepository): WatchlistRepository
 
     @Singleton
     @Binds

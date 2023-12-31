@@ -1,5 +1,6 @@
 package me.aikovdp.dionysus.data
 
+import me.aikovdp.dionysus.data.source.local.LocalMovie
 import me.aikovdp.dionysus.data.source.network.NetworkMovie
 import me.aikovdp.dionysus.data.source.network.NetworkMovieDetails
 import java.time.LocalDate
@@ -20,4 +21,16 @@ fun NetworkMovieDetails.toExternal() = MovieDetails(
     runtime = runtime.minutes,
     tagline = tagline,
     overview = overview
+)
+
+fun LocalMovie.toExternal() = Movie(
+    id = id,
+    title = title,
+    posterUrl = posterUrl
+)
+
+fun Movie.toLocal() = LocalMovie(
+    id = id,
+    title = title,
+    posterUrl = posterUrl
 )
