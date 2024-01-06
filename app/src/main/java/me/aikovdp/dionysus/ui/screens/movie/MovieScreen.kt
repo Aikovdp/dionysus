@@ -2,10 +2,8 @@ package me.aikovdp.dionysus.ui.screens.movie
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -79,7 +77,8 @@ fun MovieDetailScreen(
                     AsyncImage(
                         model = movie.backdropUrl,
                         contentDescription = null,
-                        contentScale = ContentScale.FillWidth
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -99,7 +98,9 @@ private fun MovieDescription(movie: MovieDetails) {
     SurfaceContainer {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
             Text(
                 text = movie.tagline,
@@ -145,7 +146,6 @@ fun SurfaceContainer(
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 3.dp,
         modifier = modifier
-            .height(IntrinsicSize.Min)
             .fillMaxWidth()
     ) {
         content()
