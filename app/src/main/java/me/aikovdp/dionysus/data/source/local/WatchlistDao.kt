@@ -32,10 +32,9 @@ interface WatchlistDao {
      * Inserts a watchlist entry in the database.
      *
      * @param entry the entry to be inserted.
-     * @param movie the movie the entry refers to.
      */
     @Insert
-    suspend fun insert(entry: LocalWatchlistEntry, movie: LocalMovie)
+    suspend fun insert(entry: LocalWatchlistEntry)
 
     /**
      * Deletes a watchlist entry by movie id
