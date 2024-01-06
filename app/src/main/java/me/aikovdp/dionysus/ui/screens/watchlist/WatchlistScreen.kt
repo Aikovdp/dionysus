@@ -2,6 +2,7 @@ package me.aikovdp.dionysus.ui.screens.watchlist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -49,7 +50,7 @@ fun WatchlistGrid(
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(128.dp),
         modifier = modifier,
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -73,7 +74,8 @@ fun WatchlistGridEntry(
         AsyncImage(
             model = entry.movie.posterUrl,
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.aspectRatio(0.675F)
         )
         Text(
             text = entry.movie.title,
