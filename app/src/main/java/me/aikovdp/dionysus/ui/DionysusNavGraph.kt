@@ -2,14 +2,9 @@ package me.aikovdp.dionysus.ui
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigation.suite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
 import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteScope
-import androidx.compose.material3.adaptive.navigation.suite.NavigationSuiteType
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,8 +19,7 @@ import me.aikovdp.dionysus.ui.screens.movie.MovieDetailScreen
 import me.aikovdp.dionysus.ui.screens.watchlist.WatchlistScreen
 
 @OptIn(
-    ExperimentalMaterial3AdaptiveNavigationSuiteApi::class,
-    ExperimentalMaterial3AdaptiveApi::class
+    ExperimentalMaterial3AdaptiveNavigationSuiteApi::class
 )
 @Composable
 @Preview
@@ -39,17 +33,7 @@ fun MainNavigation() {
         DionysusNavigationActions(navController)
     }
 
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    // Custom configuration that shows a navigation drawer in large screens.
-    val customNavSuiteType =
-        if (adaptiveInfo.windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
-            NavigationSuiteType.NavigationDrawer
-        } else {
-            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
-        }
-
     NavigationSuiteScaffold(
-        layoutType = customNavSuiteType,
         navigationSuiteItems = navigationSuiteItems(selectedDestination, navActions::navigateTo)
     ) {
         NavHost(navController = navController, startDestination = startDestination) {
