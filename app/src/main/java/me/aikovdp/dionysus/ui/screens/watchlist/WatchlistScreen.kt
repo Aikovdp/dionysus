@@ -14,10 +14,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.data.Movie
 import me.aikovdp.dionysus.data.WatchlistEntry
 import me.aikovdp.dionysus.ui.search.SearchBarScaffold
@@ -38,7 +41,9 @@ fun WatchlistScreen(
         WatchlistGrid(
             items = uiState.items,
             navigateToMovieDetails = navigateToMovieDetails,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .testTag(stringResource(R.string.test_tag_watchlist_content))
         )
     }
 }

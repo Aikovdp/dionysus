@@ -2,7 +2,10 @@ package me.aikovdp.dionysus
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -54,6 +57,24 @@ class AppNavigationTest {
         composeTestRule.onNodeWithText(activity.getString(R.string.watchlist))
         // Check that the diary screen was opened
         composeTestRule.onNodeWithText("Diary").assertIsDisplayed()
+    }
+
+    @Test
+    fun movieDetailScreenFromWatchlist_upButton_returnsToWatchlist() = runTest {
+        setContent()
+        val laLaLandId = 313369
+        if (!watchlistRepository.containsMovieStream(laLaLandId).first()) {
+            watchlistRepository.createEntry(313369)
+        }
+        // Navigate to the movie detail screen
+        composeTestRule.onNodeWithText("La La Land").performClick()
+
+        // Click the back button
+        composeTestRule.onNodeWithContentDescription(activity.getString(R.string.back))
+            .performClick()
+        // Check that the watchlist screen was opened again
+        composeTestRule.onNodeWithTag(activity.getString(R.string.test_tag_watchlist_content))
+            .assertIsDisplayed()
     }
 
     private fun setContent() {
