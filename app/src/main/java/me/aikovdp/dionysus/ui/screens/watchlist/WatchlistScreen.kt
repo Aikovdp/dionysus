@@ -37,13 +37,13 @@ fun WatchlistScreen(
     SearchBarScaffold(
         navigateToMovieDetails = navigateToMovieDetails,
         modifier = modifier
+            .testTag(stringResource(R.string.test_tag_watchlist_content))
     ) { paddingValues ->
         WatchlistGrid(
             items = uiState.items,
             navigateToMovieDetails = navigateToMovieDetails,
             modifier = Modifier
                 .padding(paddingValues)
-                .testTag(stringResource(R.string.test_tag_watchlist_content))
         )
     }
 }

@@ -43,29 +43,30 @@ class AppNavigationTest {
     @Test
     fun bottomBarNavigationFromWatchlistToDiary() = runTest {
         setContent()
-        val laLaLandId = 313369
-        if (!watchlistRepository.containsMovieStream(laLaLandId).first()) {
-            watchlistRepository.createEntry(313369)
-        }
 
         // Open diary screen
         composeTestRule.onNodeWithText(activity.getString(R.string.diary))
+            .performClick()
         // Check that the diary screen was opened
-        composeTestRule.onNodeWithText("La La Land").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(activity.getString(R.string.test_tag_diary_content))
+            .assertIsDisplayed()
 
         // Open watchlist screen
         composeTestRule.onNodeWithText(activity.getString(R.string.watchlist))
-        // Check that the diary screen was opened
-        composeTestRule.onNodeWithText("Diary").assertIsDisplayed()
+            .performClick()
+        // Check that the watchlist screen was opened
+        composeTestRule.onNodeWithTag(activity.getString(R.string.test_tag_watchlist_content))
+            .assertIsDisplayed()
     }
 
     @Test
     fun movieDetailScreenFromWatchlist_upButton_returnsToWatchlist() = runTest {
-        setContent()
         val laLaLandId = 313369
         if (!watchlistRepository.containsMovieStream(laLaLandId).first()) {
             watchlistRepository.createEntry(313369)
         }
+
+        setContent()
         // Navigate to the movie detail screen
         composeTestRule.onNodeWithText("La La Land").performClick()
 
