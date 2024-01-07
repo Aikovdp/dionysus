@@ -10,6 +10,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import me.aikovdp.dionysus.data.DiaryRepository
+import me.aikovdp.dionysus.data.LocalDiaryRepository
 import me.aikovdp.dionysus.data.LocalWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.NetworkMovieRepository
@@ -30,6 +32,10 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindWatchlistRepository(repository: LocalWatchlistRepository): WatchlistRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindDiaryRepository(repository: LocalDiaryRepository): DiaryRepository
 
     @Singleton
     @Binds
