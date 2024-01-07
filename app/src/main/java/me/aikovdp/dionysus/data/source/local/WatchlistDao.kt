@@ -52,4 +52,13 @@ interface WatchlistDao {
      */
     @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE movieId = :movieId)")
     fun observeIsInWatchlist(movieId: Int): Flow<Boolean>
+
+    /**
+     * Checks whether a movie is in the watchlist.
+     *
+     * @param movieId the movie id.
+     * @return whether the movie is in the watchlist.
+     */
+    @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE movieId = :movieId)")
+    suspend fun isInWatchlist(movieId: Int): Boolean
 }

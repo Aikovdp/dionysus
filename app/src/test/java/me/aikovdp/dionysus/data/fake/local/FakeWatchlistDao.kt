@@ -34,4 +34,7 @@ class FakeWatchlistDao(
 
     override fun observeIsInWatchlist(movieId: Int): Flow<Boolean> =
         entryStream.map { list -> list.any { it.movieId == movieId } }
+
+    override suspend fun isInWatchlist(movieId: Int): Boolean =
+        entries.any { it.movieId == movieId }
 }

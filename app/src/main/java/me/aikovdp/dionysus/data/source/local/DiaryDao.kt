@@ -17,6 +17,14 @@ interface DiaryDao {
     fun observeAll(): Flow<List<LocalDiaryEntry>>
 
     /**
+     * Gets a diary entry by id.
+     *
+     * @param id the entry id.
+     */
+    @Query("SELECT * from diary WHERE id = :id")
+    suspend fun getById(id: Int): LocalDiaryEntry
+
+    /**
      * Inserts a diary entry in the database.
      *
      * @param entry the entry to be inserted.
@@ -31,4 +39,13 @@ interface DiaryDao {
      */
     @Query("DELETE FROM diary WHERE id = :id")
     suspend fun deleteById(id: Int)
+
+    /**
+     * Checks whether a movie is in the watchlist.
+     *
+     * @param movieId the movie id.
+     * @return whether the movie is in the watchlist.
+     */
+    @Query("SELECT EXISTS(SELECT 1 FROM diary WHERE movieId = :movieId)")
+    suspend fun isInDiary(movieId: Int): Boolean
 }

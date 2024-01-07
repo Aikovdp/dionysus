@@ -5,9 +5,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import me.aikovdp.dionysus.data.fake.local.FakeDiaryDao
 import me.aikovdp.dionysus.data.fake.local.FakeMovieDao
 import me.aikovdp.dionysus.data.fake.local.FakeWatchlistDao
 import me.aikovdp.dionysus.data.fake.network.FakeMoviesNetworkDataSource
+import me.aikovdp.dionysus.data.source.local.DiaryDao
 import org.junit.Before
 import org.junit.Test
 
@@ -17,6 +19,7 @@ class LocalWatchlistRepositoryTest {
     private lateinit var moviesNetworkDataSource: FakeMoviesNetworkDataSource
     private lateinit var movieDao: FakeMovieDao
     private lateinit var watchlistDao: FakeWatchlistDao
+    private lateinit var diaryDao: DiaryDao
 
     private var testDispatcher = UnconfinedTestDispatcher()
     private var testScope = TestScope(testDispatcher)
@@ -28,9 +31,11 @@ class LocalWatchlistRepositoryTest {
     fun createRepository() {
         watchlistDao = FakeWatchlistDao()
         movieDao = FakeMovieDao()
+        diaryDao = FakeDiaryDao()
         moviesNetworkDataSource = FakeMoviesNetworkDataSource()
         watchlistRepository = LocalWatchlistRepository(
             watchlistDao,
+            diaryDao,
             movieDao,
             moviesNetworkDataSource
         )
