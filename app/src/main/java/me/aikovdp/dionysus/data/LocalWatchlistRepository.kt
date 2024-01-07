@@ -9,7 +9,7 @@ import me.aikovdp.dionysus.data.source.network.MoviesNetworkDataSource
 import java.time.Instant
 import javax.inject.Inject
 
-class LocalFirstWatchlistRepository @Inject constructor(
+class LocalWatchlistRepository @Inject constructor(
     private val watchlistDao: WatchlistDao,
     private val movieDao: MovieDao,
     private val movieDataSource: MoviesNetworkDataSource

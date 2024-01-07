@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalFirstWatchlistRepositoryTest {
+class LocalWatchlistRepositoryTest {
     // Test dependencies
     private lateinit var moviesNetworkDataSource: FakeMoviesNetworkDataSource
     private lateinit var movieDao: FakeMovieDao
@@ -22,14 +22,14 @@ class LocalFirstWatchlistRepositoryTest {
     private var testScope = TestScope(testDispatcher)
 
     // Class under test
-    private lateinit var watchlistRepository: LocalFirstWatchlistRepository
+    private lateinit var watchlistRepository: LocalWatchlistRepository
 
     @Before
     fun createRepository() {
         watchlistDao = FakeWatchlistDao()
         movieDao = FakeMovieDao()
         moviesNetworkDataSource = FakeMoviesNetworkDataSource()
-        watchlistRepository = LocalFirstWatchlistRepository(
+        watchlistRepository = LocalWatchlistRepository(
             watchlistDao,
             movieDao,
             moviesNetworkDataSource
