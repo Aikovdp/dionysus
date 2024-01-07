@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [LocalMovie::class, LocalWatchlistEntry::class],
+    entities = [LocalMovie::class, LocalWatchlistEntry::class, LocalDiaryEntry::class],
     version = 1,
     exportSchema = false
 )
@@ -13,4 +13,5 @@ import androidx.room.TypeConverters
 abstract class DionysusDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun watchlistDao(): WatchlistDao
+    abstract fun diaryDao(): DiaryDao
 }
