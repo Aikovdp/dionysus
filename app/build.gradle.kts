@@ -20,7 +20,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "me.aikovdp.dionysus.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -84,6 +84,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     ksp("com.google.dagger:hilt-android-compiler:2.50")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.50")
+    kspAndroidTest("com.google.dagger:hilt-android-testing:2.50")
 
     // Coil
     implementation("io.coil-kt:coil:2.5.0")
