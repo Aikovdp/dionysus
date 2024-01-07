@@ -14,13 +14,21 @@ class FakeDiaryDao(
 
     private val entryStream = MutableStateFlow(entries)
     override fun observeAll(): Flow<List<LocalDiaryEntry>> = entryStream
+    override suspend fun getAll(): List<LocalDiaryEntry> = entries.toList()
+
     override suspend fun getById(id: Int): LocalDiaryEntry {
         return entries.find { it.id == id } ?: throw NoSuchElementException()
     }
 
     override suspend fun insert(entry: LocalDiaryEntry) {
-        entries.removeIf { it.movieId == entry.movieId }
-        entries.add(entry)
+        entries.removeIf { it.id == entry.id }
+        entries.add(
+            LocalDiaryEntry(
+                id = entries.size,
+                movieId = entry.movieId,
+                addedAt = entry.addedAt
+            )
+        )
         entryStream.update { entries }
     }
 
