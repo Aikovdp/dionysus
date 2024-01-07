@@ -70,7 +70,6 @@ fun DiaryScreen(
         modifier = modifier
             .testTag(stringResource(R.string.test_tag_diary_content))
     ) { paddingValues ->
-        Text("Diary", modifier.padding(paddingValues))
         DiaryContent(
             diaryEntries = uiState.items,
             navigateToMovieDetails = navigateToMovieDetails,
