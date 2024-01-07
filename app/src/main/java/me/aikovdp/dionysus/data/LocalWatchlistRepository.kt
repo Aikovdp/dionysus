@@ -19,10 +19,12 @@ class LocalWatchlistRepository @Inject constructor(
     override fun getEntriesStream(): Flow<List<WatchlistEntry>> =
         watchlistDao.observeAll().map { list ->
             list.map {
+                val movie = movieDao.getById(it.movieId)
+                    ?: throw IllegalStateException("This shouldn't happen")
                 WatchlistEntry(
                     id = it.movieId,
                     added = it.addedAt,
-                    movie = movieDao.getById(it.movieId).toExternal()
+                    movie = movie.toExternal()
                 )
             }
         }

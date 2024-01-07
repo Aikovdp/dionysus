@@ -17,6 +17,14 @@ interface DiaryDao {
     fun observeAll(): Flow<List<LocalDiaryEntry>>
 
     /**
+     * Gets a list of diary entries.
+     *
+     * @return all diary entries.
+     */
+    @Query("SELECT * FROM diary")
+    suspend fun getAll(): List<LocalDiaryEntry>
+
+    /**
      * Gets a diary entry by id.
      *
      * @param id the entry id.

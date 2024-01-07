@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import me.aikovdp.dionysus.R
 import me.aikovdp.dionysus.data.DiaryEntry
 import me.aikovdp.dionysus.data.DiaryRepository
@@ -25,7 +26,7 @@ data class DiaryUiState(
 
 @HiltViewModel
 class DiaryViewModel @Inject constructor(
-    diaryRepository: DiaryRepository
+    private val diaryRepository: DiaryRepository
 ) : ViewModel() {
     private val _userMessage: MutableStateFlow<Int?> = MutableStateFlow(null)
     private val _isLoading = MutableStateFlow(false)
@@ -64,4 +65,9 @@ class DiaryViewModel @Inject constructor(
         started = WhileUiSubscribed,
         initialValue = DiaryUiState(isLoading = true)
     )
+
+    fun deleteEntry(id: Int) = viewModelScope.launch {
+        diaryRepository.removeEntry(id)
+    }
+
 }

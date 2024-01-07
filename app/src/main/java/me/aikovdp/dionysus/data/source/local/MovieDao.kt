@@ -27,7 +27,7 @@ interface MovieDao {
      * @return the movie with movieId.
      */
     @Query("SELECT * FROM movie WHERE id = :movieId")
-    suspend fun getById(movieId: Int): LocalMovie
+    suspend fun getById(movieId: Int): LocalMovie?
 
     /**
      * Inserts or updates a movie in the database. If a movie already exists, replaces it.

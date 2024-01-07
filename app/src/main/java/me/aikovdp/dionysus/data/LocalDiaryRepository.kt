@@ -19,10 +19,12 @@ class LocalDiaryRepository @Inject constructor(
     override fun getEntriesStream(): Flow<List<DiaryEntry>> =
         diaryDao.observeAll().map { list ->
             list.map {
+                val movie = movieDao.getById(it.movieId)
+                    ?: throw IllegalStateException("This shouldn't happen")
                 DiaryEntry(
                     id = it.id!!,
                     added = it.addedAt,
-                    movie = movieDao.getById(it.movieId).toExternal()
+                    movie = movie.toExternal()
                 )
             }
         }
@@ -36,7 +38,11 @@ class LocalDiaryRepository @Inject constructor(
     override suspend fun removeEntry(id: Int) {
         val movieId = diaryDao.getById(id).movieId
         diaryDao.deleteById(id)
-        if (!watchlistDao.isInWatchlist(movieId)) {
+        if (!watchlistDao.isInWatchlist(movieId)
+            && diaryDao.getAll() // Ensure no other diary entry references the movie
+                .filterNot { it.id == id }
+                .none { it.movieId == movieId }
+        ) {
             movieDao.deleteById(movieId)
         }
     }

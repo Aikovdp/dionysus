@@ -17,4 +17,5 @@
     <string name="test_tag_diary_content">test_tag_diary_content</string>
     <string name="cancel">Cancel</string>
     <string name="loading_diary_error">Error while loading diary</string>
+    <string name="delete">Delete</string>
 </resources>
