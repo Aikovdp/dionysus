@@ -14,6 +14,7 @@ import me.aikovdp.dionysus.data.NetworkMovieRepository
 import me.aikovdp.dionysus.data.LocalWatchlistRepository
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
+import me.aikovdp.dionysus.data.source.local.DiaryDao
 import me.aikovdp.dionysus.data.source.local.DionysusDatabase
 import me.aikovdp.dionysus.data.source.local.MovieDao
 import me.aikovdp.dionysus.data.source.local.WatchlistDao
@@ -73,4 +74,7 @@ object DatabaseModule {
 
     @Provides
     fun provideWatchlistDao(database: DionysusDatabase): WatchlistDao = database.watchlistDao()
+
+    @Provides
+    fun provideDiaryDao(database: DionysusDatabase): DiaryDao = database.diaryDao()
 }
