@@ -20,7 +20,7 @@ class LocalDiaryRepository @Inject constructor(
         diaryDao.observeAll().map { list ->
             list.map {
                 DiaryEntry(
-                    id = it.movieId,
+                    id = it.id!!,
                     added = it.addedAt,
                     movie = movieDao.getById(it.movieId).toExternal()
                 )
@@ -30,7 +30,7 @@ class LocalDiaryRepository @Inject constructor(
     override suspend fun createEntry(movieId: Int, date: LocalDate) {
         val movie = movieDataSource.getMovie(movieId).toExternal().toMovie().toLocal()
         movieDao.upsert(movie)
-        diaryDao.insert(LocalDiaryEntry(0, movieId, date))
+        diaryDao.insert(LocalDiaryEntry(null, movieId, date))
     }
 
     override suspend fun removeEntry(id: Int) {

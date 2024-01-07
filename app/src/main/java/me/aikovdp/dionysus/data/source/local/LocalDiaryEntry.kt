@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 @Entity("diary")
 data class LocalDiaryEntry(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Int?,
     val movieId: Int,
     val addedAt: LocalDate
 )
