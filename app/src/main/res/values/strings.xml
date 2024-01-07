@@ -18,4 +18,5 @@
     <string name="cancel">Cancel</string>
     <string name="loading_diary_error">Error while loading diary</string>
     <string name="delete">Delete</string>
+    <string name="watchlist_toggle_fab">Watchlist toggle FAB</string>
 </resources>

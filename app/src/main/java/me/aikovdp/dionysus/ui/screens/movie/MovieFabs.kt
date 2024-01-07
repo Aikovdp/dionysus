@@ -16,6 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +39,10 @@ private fun AddToDiaryFab(onClick: () -> Unit) {
 
 @Composable
 private fun AddToWatchlistFab(onClick: () -> Unit, isInWatchlist: Boolean) {
-    SmallFloatingActionButton(onClick = onClick) {
+    SmallFloatingActionButton(
+        onClick = onClick,
+        modifier = Modifier.testTag(stringResource(R.string.watchlist_toggle_fab))
+    ) {
         if (isInWatchlist)
             Icon(
                 imageVector = Icons.Filled.Bookmark,
