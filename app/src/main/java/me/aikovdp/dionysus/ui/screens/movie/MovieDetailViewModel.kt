@@ -13,12 +13,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.aikovdp.dionysus.R
+import me.aikovdp.dionysus.data.DiaryRepository
 import me.aikovdp.dionysus.data.MovieDetails
 import me.aikovdp.dionysus.data.MovieRepository
 import me.aikovdp.dionysus.data.WatchlistRepository
 import me.aikovdp.dionysus.ui.DionysusDestinationArgs
 import me.aikovdp.dionysus.util.Async
 import me.aikovdp.dionysus.util.WhileUiSubscribed
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 data class MovieDetailUiState(
@@ -32,6 +36,7 @@ data class MovieDetailUiState(
 class MovieDetailViewModel @Inject constructor(
     movieRepository: MovieRepository,
     private val watchlistRepository: WatchlistRepository,
+    private val diaryRepository: DiaryRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val movieIdArg: String = savedStateHandle[DionysusDestinationArgs.MOVIE_ID_ARG]!!
@@ -100,6 +105,17 @@ class MovieDetailViewModel @Inject constructor(
             } else {
                 watchlistRepository.createEntry(movieId)
             }
+        }
+    }
+
+    fun addToWatchlist(selectedDateMillis: Long?) {
+        val selectedDate = LocalDate.ofInstant(
+            Instant.ofEpochMilli(selectedDateMillis ?: throw IllegalArgumentException()),
+            ZoneId.of("UTC")
+
+        )
+        viewModelScope.launch {
+            diaryRepository.createEntry(movieId, selectedDate)
         }
     }
 }
