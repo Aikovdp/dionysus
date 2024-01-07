@@ -62,9 +62,7 @@ class AppNavigationTest {
     @Test
     fun movieDetailScreenFromWatchlist_upButton_returnsToWatchlist() = runTest {
         val laLaLandId = 313369
-        if (!watchlistRepository.containsMovieStream(laLaLandId).first()) {
-            watchlistRepository.createEntry(313369)
-        }
+        watchlistRepository.createEntry(laLaLandId)
 
         setContent()
         // Navigate to the movie detail screen
